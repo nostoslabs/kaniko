@@ -110,10 +110,7 @@ The workflows use GitHub Actions cache to speed up builds:
 ## Security
 
 ### Root Certificates
-Images include up-to-date root CA certificates from Debian to ensure secure HTTPS connections. The certificate stage is rebuilt on every image build.
-
-### Image Signing
-Images can be verified using cosign. The public key is available in the repository at `cosign.pub`.
+Images include up-to-date root CA certificates from Debian to ensure secure HTTPS connections. The certificate stage is rebuilt on every image build to ensure the latest security updates are included.
 
 ## Manual Building
 
