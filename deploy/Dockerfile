@@ -56,7 +56,7 @@ RUN \
 
 # Generate latest ca-certificates
 FROM debian:bookworm-slim AS certs
-RUN apt update && apt install -y ca-certificates
+RUN apt update && apt install -y ca-certificates && update-ca-certificates
 
 # use musl busybox since it's staticly compiled on all platforms
 FROM busybox:musl AS busybox
