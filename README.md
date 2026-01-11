@@ -157,10 +157,29 @@ repository](https://github.com/chainguard-dev/kaniko/tags).
 Release notes and source code archives are available on the [releases
 section](https://github.com/chainguard-dev/kaniko/releases).
 
-Binary release artifacts such as container images are **not published**. The old
-container images as `gcr.io/kaniko-project/executor` and
-`gcr.io/kaniko-project/warmer` are unmaintained and no longer updated. Users
-[must build these artifacts themselves](DEVELOPMENT.md) or use the Chainguard
+Container images are published to the GitHub Container Registry (GHCR) for this repository:
+
+* **Executor images:**
+  * `ghcr.io/nostoslabs/kaniko-executor:latest` - Standard executor image
+  * `ghcr.io/nostoslabs/kaniko-executor:debug` - Debug variant with shell and busybox tools
+  * `ghcr.io/nostoslabs/kaniko-executor:slim` - Slim variant without credential helpers
+  * `ghcr.io/nostoslabs/kaniko-executor:<commit-sha>` - Commit-specific tags (also available with `-debug` and `-slim` suffixes)
+
+* **Warmer image:**
+  * `ghcr.io/nostoslabs/kaniko-warmer:latest` - Cache warming utility
+  * `ghcr.io/nostoslabs/kaniko-warmer:<commit-sha>` - Commit-specific tags
+
+Images are automatically built and published:
+- On every push to the `main` branch (tagged with commit SHA and stable tags like `latest`, `debug`, `slim`)
+- On every published release
+- Can be triggered manually via workflow dispatch
+
+Images are built for multiple architectures: `linux/amd64`, `linux/arm64`, `linux/s390x`, and `linux/ppc64le` (varies by image variant).
+
+The old container images as `gcr.io/kaniko-project/executor` and
+`gcr.io/kaniko-project/warmer` are unmaintained and no longer updated.
+
+Users can also [build these artifacts themselves](DEVELOPMENT.md) or use the Chainguard
 container images as customer:
 
 * [kaniko](https://images.chainguard.dev/directory/image/kaniko)
@@ -1207,7 +1226,7 @@ delay of 1 second. Defaults to 0`.
 ### Debug Image
 
 The kaniko executor image is based on scratch and doesn't contain a shell. We
-provide `gcr.io/kaniko-project/executor:debug`, a debug image which consists of
+provide `ghcr.io/nostoslabs/kaniko-executor:debug`, a debug image which consists of
 the kaniko executor image along with a busybox shell to enter.
 
 You can launch the debug image with a shell entrypoint:
